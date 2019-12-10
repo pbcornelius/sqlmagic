@@ -34,6 +34,8 @@ path_to_a_sql_file
 
 * `%sqlm var=var_name` -> the result set (as a `DataFrame`) is stored in `var_name` (the default is `df`).
 
+The rendering of the widgets doesn't completely work on Github, but looks fine with Jupyter itself.
+
 #### Thanks
 
 To enable the timer and cancellation functionality, I use the fantastic https://github.com/Kirill888/jupyter-ui-poll to process UI events, but block further cell execution. The UI elements are powered by https://github.com/jupyter-widgets/ipywidgets. I use Pandas DataFrames for the returned result sets, although this can be changed per driver implementation.
