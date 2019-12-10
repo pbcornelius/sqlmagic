@@ -1,0 +1,2 @@
+# sqlmagic
+IPython SQL Magic
