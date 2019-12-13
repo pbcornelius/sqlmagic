@@ -13,11 +13,8 @@ class JdbcMagic(SqlMagic):
         con_pars = {}
         for cell_line in cell.strip().split('\n'):
             par, val = cell_line.split('=', maxsplit=1)
-            if par == 'driver_args':
+            if par in ('driver_args', 'jars'):
                 con_pars[par] = val.split(';')
-                if len(con_pars[par]) > 2:
-                    print(f'You cannot specify more than two driver arguments as per DriverManager.getConnection(url, user, pw). Use the URL to specify driver arguments. Connection not established.')
-                    return
                 if len(con_pars[par]) == 1:
                     con_pars[par] = con_pars[par][0]
             elif par in self.CONNECTION_PARS:
