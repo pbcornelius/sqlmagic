@@ -5,11 +5,11 @@ This started as a simple magic implementation for JDBC ([ipython-sql](https://gi
 
 #### Implementation
 
-`sql_magic.py` contains the main methods for statement execution, display, scheduling, etc, and `jdbc/odbc_magic.py` contain the driver specific implementations. The direct driver access allows easy extensions (e.g., support for additional data types).
+`sql_magic.py` contains the main methods for statement execution, display, scheduling, etc, and `jdbc/odbc_magic.py` contain the driver specific implementations. `jdbc_fast.py` is a significantly faster implementation using [`java-rsagg`](https://github.com/pbcornelius/java-rsagg) and JPype's ndarrays to by-pass the slow `jaydebeapi.fetchall()`. In a 1,000,000-rows table with all data types, the performance improvement on my laptop is 4min 26s -> 24.1s. The performance improvement is larger for literal types than for Objects/Strings. The direct driver access allows easy extensions (e.g., support for additional data types).
 
 #### Use
 
-Connections are driver-specific. See the test files for MSSQL ODBC/H2 JDBC examples.
+Connections are driver-specific. See the test files for MSSQL ODBC/H2 JDBC examples. For `jdbc_fast`, the [`java-rsagg`](https://github.com/pbcornelius/java-rsagg) JAR needs to be added to the class path (if you add it to the `jar` connection parameter, jaydebeapi will take care of that).
 
 Connections and cursors are kept alive until `%close` is called. The cursor can also be accessed from Python through `cursor`.
 
