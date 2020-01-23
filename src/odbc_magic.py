@@ -48,9 +48,8 @@ class OdbcMagic(SqlMagic):
         col_names = []
         for col in self.cursor.description:
             col_names.append(col[0])
-        # for whatever reason, Pandas gets the shape wrong with std. Python types in pyodbc
-        data = np.array(self.cursor.fetchall())
-        return pd.DataFrame(data=data, columns=col_names if col_names else None)
+        data = self.cursor.fetchall()
+        return pd.DataFrame.from_records(data=data, columns=col_names if col_names else None)
 
 
 # Register magic with a running IPython.
