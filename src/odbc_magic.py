@@ -42,7 +42,7 @@ class OdbcMagic(SqlMagic):
         self.cursor.cancel()
 
     def has_results(self):
-        return self.cursor.rowcount == -1
+        return self.cursor.description is not None
 
     def getDataFrame(self):
         col_names = []
