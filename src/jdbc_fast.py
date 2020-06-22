@@ -13,17 +13,17 @@ datadict = {
     'LONGVARCHAR': lambda o: np.array(o.getStr()[:]),
     'LONGNVARCHAR': lambda o: np.array(o.getStr()[:]),
     'OTHER': lambda o: o.getObj()[:],
-    'TINYINT': lambda o: o.getByte()[:],
-    'SMALLINT': lambda o: o.getShort()[:],
-    'INTEGER': lambda o: o.getInt()[:],
-    'BIGINT': lambda o: o.getLong()[:],
-    'REAL': lambda o: o.getFloat()[:],
+    'TINYINT': lambda o: o.getByteObj()[:] if o.nullable else o.getByte()[:],
+    'SMALLINT': lambda o: o.getShortObj()[:] if o.nullable else o.getShort()[:],
+    'INTEGER': lambda o: o.getIntObj()[:] if o.nullable else o.getInt()[:],
+    'BIGINT': lambda o: o.getLongObj()[:] if o.nullable else o.getLong()[:],
+    'REAL': lambda o: o.getFloatObj()[:] if o.nullable else o.getFloat()[:],
     'FLOAT': lambda o: o.getDouble()[:],
     'DOUBLE': lambda o: o.getDouble()[:],
-    'BOOLEAN': lambda o: o.getBoolean()[:],
+    'BOOLEAN': lambda o: o.getBooleanObj()[:] if o.nullable else o.getBoolean()[:],
     'TIME': lambda o: np.array(list(map(str, o.getTime()[:]))),
-    'DATE': lambda o: o.getLong()[:].astype('datetime64[D]'),
-    'TIMESTAMP': lambda o: o.getLong()[:].astype('datetime64[s]')
+    'DATE': lambda o: o.getLongObj()[:].astype('datetime64[D]') if o.nullable else o.getLong()[:].astype('datetime64[D]'),
+    'TIMESTAMP': lambda o: o.getLongObj()[:].astype('datetime64[s]') if o.nullable else o.getLong()[:].astype('datetime64[s]')
 }
 
 
