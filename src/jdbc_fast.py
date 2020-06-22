@@ -22,8 +22,8 @@ datadict = {
     'DOUBLE': lambda o: o.getDouble()[:],
     'BOOLEAN': lambda o: o.getBooleanObj()[:] if o.nullable else o.getBoolean()[:],
     'TIME': lambda o: np.array(list(map(str, o.getTime()[:]))),
-    'DATE': lambda o: o.getLongObj()[:].astype('datetime64[D]') if o.nullable else o.getLong()[:].astype('datetime64[D]'),
-    'TIMESTAMP': lambda o: o.getLongObj()[:].astype('datetime64[s]') if o.nullable else o.getLong()[:].astype('datetime64[s]')
+    'DATE': lambda o: np.array(o.getLongObj()[:]).astype('datetime64[D]') if o.nullable else np.array(o.getLong()[:]).astype('datetime64[D]'),
+    'TIMESTAMP': lambda o: np.array(o.getLongObj()[:]).astype('datetime64[s]') if o.nullable else np.array(o.getLong()[:]).astype('datetime64[s]')
 }
 
 
