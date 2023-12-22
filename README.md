@@ -36,6 +36,10 @@ path_to_a_sql_file
 
 The rendering of the widgets doesn't completely work on Github, but looks fine with Jupyter itself.
 
+#### Notes
+
+Running one cell after another, `%%sqlm` blocks execution (i.e., no next cell is executed) while waiting for the SQL command to return. However, this doesn’t not seem to work when clicking "Run all cells". Unclear why.
+
 #### Thanks
 
 To enable the timer and cancellation functionality, I use the fantastic https://github.com/Kirill888/jupyter-ui-poll to process UI events, but block further cell execution. The UI elements are powered by https://github.com/jupyter-widgets/ipywidgets. I use Pandas DataFrames for the returned result sets, although this can be changed per driver implementation.
