@@ -1,6 +1,7 @@
 from IPython.core.magic import (magics_class, line_magic, cell_magic, line_cell_magic)
 import pyodbc, pandas as pd, numpy as np
 from sql_magic import SqlMagic
+from odbc_utils import add_datetimeoffset_converter
 
 
 @magics_class
@@ -25,6 +26,7 @@ class OdbcMagic(SqlMagic):
             url = url.replace(con_pars['PWD'], '****')
             print(f'connected to {url}')
 
+            add_datetimeoffset_converter(self.con)
             self.cursor = self.con.cursor()
             self.shell.user_ns.update({'cursor': self.cursor})
         else:
