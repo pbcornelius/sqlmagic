@@ -68,7 +68,6 @@ class SqlMagic(Magics):
             sql = line
 
             self.noprint = False
-            self.output_varname = 'df'
         else:
             # line parsing
             line = line.split(' ')
@@ -87,8 +86,6 @@ class SqlMagic(Magics):
             self.output_varname = next(filter(lambda x: x.startswith('var='), line), None)
             if self.output_varname:
                 self.output_varname = self.output_varname.split('=')[1]
-            else:
-                self.output_varname = 'df'
 
         # counter, button, layout, & display
         self.lbl_counter = ipywidgets.Label(value='initialising ...',
@@ -179,12 +176,14 @@ class SqlMagic(Magics):
                     self.lbl_counter.value = 'Parsing response, creating DataFrame ...'
 
                     df = self.getDataFrame()
-                    self.shell.user_ns.update({self.output_varname: df})
+
+                    if self.output_varname is not None:
+                        self.shell.user_ns.update({self.output_varname: df})
 
                     if not self.noprint:
                         display(df)
                     else:
-                        print(f'{len(df.index):,} rows returned to {self.output_varname}')
+                        print(f'{len(df.index):,} rows returned')
                 else:
                     print(f'{self.cursor.rowcount:,} rows updated')
         finally:
