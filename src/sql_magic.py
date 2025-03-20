@@ -106,7 +106,7 @@ class SqlMagic(Magics):
 
         # start statement in new thread
         future = self.pool.submit(self.exec_statement, sql)
-        future.add_done_callback(self.statement_done)
+        future.add_done_callback(lambda f: self.event_cell_waiting.set())
 
         # update counter
         self.pool.submit(self.update_counter)
@@ -119,6 +119,7 @@ class SqlMagic(Magics):
             while not self.event_cell_waiting.is_set():
                 poll(1)
                 time.sleep(0.1)
+            self.statement_done()
 
     def exec_statement(self, sql):
         self.exc_info = None
@@ -151,7 +152,7 @@ class SqlMagic(Magics):
                     self.lbl_counter.value = f'Statement awaiting cancellation ({td})'
             time.sleep(1)
 
-    def statement_done(self, future):
+    def statement_done(self):
         """Run after a statement has completed (normally, failed, or cancelled)."""
 
         # remove stop button & stop counter
