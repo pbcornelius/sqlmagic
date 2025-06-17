@@ -86,6 +86,7 @@ class SqlMagic(Magics):
             self.output_varname = next(filter(lambda x: x.startswith('var='), line), None)
             if self.output_varname:
                 self.output_varname = self.output_varname.split('=')[1]
+                self.noprint = 'print' not in line
 
         # counter, button, layout, & display
         self.lbl_counter = ipywidgets.Label(value='initialising ...',
